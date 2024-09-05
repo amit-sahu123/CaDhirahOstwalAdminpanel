@@ -1,0 +1,50 @@
+/* .offcontainer ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.offcontainer ul li{
+    margin-bottom: 15px;
+}
+.offcontainer ul li a{
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 22px;
+    font-weight: 600;
+}
+.offcontainer ul li a:hover{
+    color: orangered;
+    
+}
+.dec123{
+    width: 40vw;
+}
+@media (max-widtth:426px) {
+    .dec123{
+        width: 60vw;
+    }
+    
+} */
+.offcontainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.offcontainer ul li {
+    margin-bottom: 15px;
+}
+
+.offcontainer ul li a {
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.offcontainer ul li a:hover {
+    color: orangered;
+}
+
+
+

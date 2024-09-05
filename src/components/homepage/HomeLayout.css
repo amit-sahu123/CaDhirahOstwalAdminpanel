@@ -1,0 +1,33 @@
+.layout-content12 {
+    display: flex;
+    margin-top: 42px; 
+  }
+  .main-content13 {
+    margin-left: 200px;
+    padding: 20px;
+    flex-grow: 1;
+    background-color: black;
+    min-height: calc(100vh - 70px);
+    box-sizing: border-box;
+    color: white;
+    margin-top: 0;
+
+  }
+  
+
+   @media (max-width: 768px) {
+     .layout-content12 {
+      flex-direction: column; 
+    } 
+    
+    .main-content13 {
+      margin-left: 0; 
+    }
+    
+    .layout-content12  .side-navbar {
+      display: none; 
+    }
+  } 
+  
+
+  
