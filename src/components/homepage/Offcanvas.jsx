@@ -35,17 +35,17 @@ export default function Offcanvas() {
    <div className='offcontainer' >
    <ul >
 
-                <li> <Link to="/">
+                {/* <li> <Link to="/">
                 <AiFillHome className="icon" /> Dashboard
-                </Link> </li>
+                </Link> </li> */}
                 
                 <li> <Link to="/meeting">
                 <FaCalendarAlt className="icon" /> Meeting
                 </Link>  </li>
 
-                <li> <Link to="/contact">
+                {/* <li> <Link to="/contact">
                 <MdContacts className="icon" /> Contact
-                </Link>  </li>
+                </Link>  </li> */}
 
                 <li> <Link to="/career">
                 <FaBriefcase className="icon" /> Career

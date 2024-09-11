@@ -5,9 +5,8 @@ import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
 import { formatDistanceToNow, parseISO } from 'date-fns'
 
 import { useGetAllMeeting } from '../../lib/react-query/queries'
-import './Meetings.css' // Import CSS file
+import './Meetings.css' 
 
-// Add icons to the library
 library.add(faCalendarAlt)
 
 function Meetings() {
@@ -22,14 +21,15 @@ function Meetings() {
 
   useEffect(() => {
     if (meetingData && meetingData.documents) {
-      setMeetings(
-        Array.isArray(meetingData.documents) ? meetingData.documents : []
-      )
+      const sortedMeetings = Array.isArray(meetingData.documents)
+        ? meetingData.documents.sort((a, b) =>
+            parseISO(b.SubmitDate) - parseISO(a.SubmitDate)
+          )
+        : []
+      setMeetings(sortedMeetings)
     }
   }, [meetingData])
 
-
-  // Function to format date and time into 12-hour format
   const formatDateTime = (dateTimeStr) => {
     const dateTime = new Date(dateTimeStr)
     const date = dateTime.toLocaleDateString('en-US', {
@@ -59,7 +59,7 @@ function Meetings() {
                 style={{
                   filter:
                     'invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg)',
-                  marginRight: '5px', // Adjust margin for alignment
+                  marginRight: '5px', 
                 }}
                 alt='whatsapp--v1'
               />
@@ -128,3 +128,4 @@ function Meetings() {
 }
 
 export default Meetings
+

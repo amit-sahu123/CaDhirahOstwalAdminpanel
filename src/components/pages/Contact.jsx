@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { format, formatDistanceToNow, parseISO } from 'date-fns'
-import './Contact.css' // Import CSS file for styling
+import './Contact.css' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUser,
@@ -21,9 +21,12 @@ const Contact = () => {
 
   useEffect(() => {
     if (contactData && contactData.documents) {
-      setContacts(
-        Array.isArray(contactData.documents) ? contactData.documents : []
-      )
+      const sortedContacts = Array.isArray(contactData.documents)
+        ? contactData.documents.sort((a, b) =>
+            parseISO(b.SubmitDate) - parseISO(a.SubmitDate)
+          )
+        : []
+      setContacts(sortedContacts)
     }
   }, [contactData])
 
@@ -74,3 +77,4 @@ const Contact = () => {
 }
 
 export default Contact
+

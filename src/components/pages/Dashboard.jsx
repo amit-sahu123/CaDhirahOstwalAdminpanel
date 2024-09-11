@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatDistanceToNow, parseISO, isAfter } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { formatDistanceToNow, parseISO, isAfter } from 'date-fns'
+import { useNavigate } from 'react-router-dom'
 import {
   faUser,
   faEnvelope,
@@ -11,23 +11,25 @@ import {
   faCalendarCheck,
   faClipboardList,
   faAddressBook,
-} from '@fortawesome/free-solid-svg-icons';
-import { useGetCurrentUser } from '../../lib/react-query/queries';
-import '../../Utils/admin.css';
-import './Dashboard.css';
-import Loader from './Loader';
+} from '@fortawesome/free-solid-svg-icons'
+import { useUserContext } from '../../context/AuthContext'
+import { useGetCurrentUser } from '../../lib/react-query/queries'
+import '../../Utils/admin.css'
+import './Dashboard.css'
+import Loader from './Loader'
 
 function Dashboard() {
-  const { data: userData, isLoading: isLoadingUserData } = useGetCurrentUser();
-  const navigate = useNavigate();
-  const [newUpdatesCount, setNewUpdatesCount] = useState(0);
+  const { data: userData, isLoading: isLoadingUserData } = useGetCurrentUser()
+  const { user, setUser, setIsAuthenticated } = useUserContext()
+  const navigate = useNavigate()
+  const [newUpdatesCount, setNewUpdatesCount] = useState(0)
 
   useEffect(() => {
     if (!isLoadingUserData && userData) {
-      const now = new Date();
-      const twentyFourHoursAgo = new Date(now - 24 * 60 * 60 * 1000);
+      const now = new Date()
+      const twentyFourHoursAgo = new Date(now - 24 * 60 * 60 * 1000) 
 
-      let updateCount = 0;
+      let updateCount = 0
 
       if (userData.employee && userData.employee.length > 0) {
         userData.employee.forEach((employee) => {
@@ -35,58 +37,56 @@ function Dashboard() {
             employee.$createdAt &&
             isAfter(parseISO(employee.$createdAt), twentyFourHoursAgo)
           ) {
-            updateCount++;
+            updateCount++
           }
-        });
+        })
       }
 
-      // Check userData.contact
       if (userData.contact && userData.contact.length > 0) {
         userData.contact.forEach((contact) => {
           if (
             contact.$createdAt &&
             isAfter(parseISO(contact.$createdAt), twentyFourHoursAgo)
           ) {
-            updateCount++;
+            updateCount++
           }
-        });
+        })
       }
 
-      // Check userData.career
       if (userData.career && userData.career.length > 0) {
         userData.career.forEach((career) => {
           if (
             career.$createdAt &&
             isAfter(parseISO(career.$createdAt), twentyFourHoursAgo)
           ) {
-            updateCount++;
+            updateCount++
           }
-        });
+        })
       }
 
-      // Check userData.meetings
       if (userData.meetings && userData.meetings.length > 0) {
         userData.meetings.forEach((meeting) => {
           if (
             meeting.$createdAt &&
             isAfter(parseISO(meeting.$createdAt), twentyFourHoursAgo)
           ) {
-            updateCount++;
+            updateCount++
           }
-        });
+        })
       }
 
-      setNewUpdatesCount(updateCount);
+      setNewUpdatesCount(updateCount)
     }
-  }, [isLoadingUserData, userData]);
+  }, [isLoadingUserData, userData])
 
   const handleNavigation = (path) => {
-    navigate(path);
-  };
-
-  if (isLoadingUserData) {
-    return <div><Loader/></div>;
+    navigate(path)
   }
+
+   if (isLoadingUserData) {
+    return <div><Loader/></div>
+  }
+
 
   return (
     <div className='dashboard-container'>
@@ -98,7 +98,7 @@ function Dashboard() {
         </div>
       </div>
       <div className='dashboard-cards'>
-       
+        
         <div
           className='dashboard-card new-inquiries'
           onClick={() => handleNavigation('/contact')}
@@ -106,7 +106,7 @@ function Dashboard() {
           <FontAwesomeIcon icon={faEnvelope} className='card-icon' />
           <div className='card-content'>
             <h3>New Inquiries</h3>
-            <p className='card-count'>{userData?.contact?.length || 0}</p>
+            <p className='card-count'>{userData.contact.length}</p>
           </div>
         </div>
         <div
@@ -116,31 +116,30 @@ function Dashboard() {
           <FontAwesomeIcon icon={faFileAlt} className='card-icon' />
           <div className='card-content'>
             <h3>New Resumes</h3>
-            <p className='card-count'>{userData?.career?.length || 0}</p>
+            <p className='card-count'>{userData.career.length}</p>
           </div>
         </div>
-
-       
-
+        
         <div
           className='dashboard-card new-meetings'
-          onClick={() => handleNavigation('/meeting')}
+          onClick={() => handleNavigation('/meetings')}
         >
           <FontAwesomeIcon icon={faCalendarCheck} className='card-icon' />
           <div className='card-content'>
             <h3>New Meetings</h3>
-            <p className='card-count'>{userData?.meetings?.length || 0}</p>
+            <p className='card-count'>{userData.meetings.length}</p>
           </div>
         </div>
-    
-      </div>
+      
 
+      </div>
       <div className='recent-activities'>
         <h3 className='activities-heading'>Recent Activities</h3>
         <ul className='activities-list'>
+         
+       
 
-          {/* Activity 1: Received new inquiry */}
-          {userData?.contact && userData.contact.length > 0 && (
+          {userData.contact && userData.contact.length > 0 && (
             <li className='activity'>
               <div className='activity-icon'>
                 <FontAwesomeIcon icon={faEnvelope} />
@@ -165,8 +164,7 @@ function Dashboard() {
             </li>
           )}
 
-          {/* Activity 2: Reviewed resume */}
-          {userData?.career && userData.career.length > 0 && (
+          {userData.career && userData.career.length > 0 && (
             <li className='activity'>
               <div className='activity-icon'>
                 <FontAwesomeIcon icon={faFileAlt} />
@@ -190,16 +188,14 @@ function Dashboard() {
             </li>
           )}
 
-          {/* Activity 3: Reviewed new Meeting */}
-          {userData?.meetings && userData.meetings.length > 0 && (
+          {userData.contact && userData.contact.length > 0 && (
             <li className='activity'>
               <div className='activity-icon'>
                 <FontAwesomeIcon icon={faAddressBook} />
               </div>
               <div className='activity-details'>
                 <p>
-                  New Meeting Schedule {' '} 
-                  {formatDistanceToNow(
+                  New Meeting Schedule {' '} {formatDistanceToNow(
                     parseISO(
                       userData.meetings[userData.meetings.length - 1].DateTime
                     ),
@@ -224,8 +220,7 @@ function Dashboard() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
-
+export default Dashboard

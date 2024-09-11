@@ -27,9 +27,12 @@ const Career = () => {
 
   useEffect(() => {
     if (resumeData && resumeData.documents) {
-      setResumes(
-        Array.isArray(resumeData.documents) ? resumeData.documents : []
-      )
+      const sortedResumes = Array.isArray(resumeData.documents)
+        ? resumeData.documents.sort((a, b) =>
+            parseISO(b.SubmitDate) - parseISO(a.SubmitDate)
+          )
+        : []
+      setResumes(sortedResumes)
     }
   }, [resumeData])
 
@@ -80,21 +83,21 @@ const Career = () => {
                     </strong>
                   </div>
                 </div>
-                <div style={{marginTop:'12px'}}>
+                <div style={{ marginTop: '12px' }}>
                   <FontAwesomeIcon icon={faEnvelope} /> <strong>Email:</strong>{' '}
                   {resume.Email}
                 </div>
-                <div style={{marginTop:'12px'}}>
+                <div style={{ marginTop: '12px' }}>
                   <FontAwesomeIcon icon={faPhone} /> <strong>Phone:</strong>{' '}
                   {resume.Phone}
                 </div>
-                <div style={{marginTop:'12px'}}>
+                <div style={{ marginTop: '12px' }}>
                   <FontAwesomeIcon icon={faFileAlt} />{' '}
                   <strong>Interest:</strong> {resume.Interest}
                 </div>
-                <div style={{marginTop:'12px'}}>
+                <div style={{ marginTop: '12px' }}>
                   <FontAwesomeIcon icon={faFileAlt} /> <strong>Resume:</strong>{' '}
-                  <button onClick={() => handleDownload(resume.ImageId)} >
+                  <button onClick={() => handleDownload(resume.ImageId)}>
                     Download
                   </button>
                 </div>
@@ -115,3 +118,4 @@ const Career = () => {
 }
 
 export default Career
+
